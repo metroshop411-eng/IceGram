@@ -18,14 +18,14 @@ jobs:
       - name: Create basic Gradle config
         run: |
           cat << 'EOF' > build.gradle
+          plugins {
+              id 'com.android.application' version '8.2.0' apply false
+          }
           allprojects {
               repositories {
                   google()
                   mavenCentral()
               }
-          }
-          plugins {
-              id 'com.android.application' version '8.2.0' apply false
           }
           EOF
 

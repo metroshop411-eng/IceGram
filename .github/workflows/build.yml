@@ -17,19 +17,26 @@ jobs:
 
       - name: Create basic Gradle config
         run: |
-          cat << 'EOF' > build.gradle
-          plugins {
-              id 'com.android.application' version '8.2.0' apply false
+          echo "plugins { id 'com.android.application' version '8.2.0' apply false }" > build.gradle
+          
+          cat << 'EOF' > settings.gradle
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
           }
-          allprojects {
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
               repositories {
                   google()
                   mavenCentral()
               }
           }
+          include ':app'
           EOF
 
-          echo "include ':app'" > settings.gradle
           mkdir -p app
           cat << 'EOF' > app/build.gradle
           plugins {

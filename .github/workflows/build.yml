@@ -15,8 +15,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Create basic Gradle config
+      - name: Fix Manifest and Create Gradle Config
         run: |
+          # Убираем устаревший атрибут package из манифеста, если он там есть
+          if [ -f "app/src/main/AndroidManifest.xml" ]; then
+            sed -i 's/package="[^"]*"//g' app/src/main/AndroidManifest.xml
+          fi
+
           echo "plugins { id 'com.android.application' version '8.2.0' apply false }" > build.gradle
           
           cat << 'EOF' > settings.gradle

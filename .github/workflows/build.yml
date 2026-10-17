@@ -17,7 +17,18 @@ jobs:
 
       - name: Create basic Gradle config
         run: |
-          echo "plugins { id 'com.android.application' version '8.2.0' apply false }" > build.gradle
+          cat << 'EOF' > build.gradle
+          allprojects {
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+          plugins {
+              id 'com.android.application' version '8.2.0' apply false
+          }
+          EOF
+
           echo "include ':app'" > settings.gradle
           mkdir -p app
           cat << 'EOF' > app/build.gradle
@@ -41,7 +52,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Build with Gradle
-        run: gradle :app:assembleDebug --stacktrace
+        run: gradle :app:assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

@@ -10,21 +10,24 @@ import android.view.Gravity
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
-        val layout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            setBackgroundColor(Color.parseColor("#1c1c1e"))
-        }
+        try {
+            val layout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = Gravity.CENTER
+                setBackgroundColor(Color.parseColor("#121212"))
+            }
 
-        val textView = TextView(this).apply {
-            text = "IceGram Client\n(В разработке)"
-            setTextColor(Color.WHITE)
-            textSize = 22f
-            gravity = Gravity.CENTER
-        }
+            val textView = TextView(this).apply {
+                text = "IceGram Client\n(Антиудаление в разработке)"
+                setTextColor(Color.WHITE)
+                textSize = 24f
+                gravity = Gravity.CENTER
+            }
 
-        layout.addView(textView)
-        setContentView(layout)
+            layout.addView(textView)
+            setContentView(layout)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

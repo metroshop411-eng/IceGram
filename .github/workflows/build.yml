@@ -15,51 +15,12 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Gradle Project Config
+      - name: Create Base Files
         run: |
-          cat << 'EOF' > build.gradle
-          plugins {
-              id 'com.android.application' version '8.2.0' apply false
-          }
-          EOF
-
-          cat << 'EOF' > settings.gradle
-          pluginManagement {
-              repositories {
-                  google()
-                  mavenCentral()
-                  gradlePluginPortal()
-              }
-          }
-          dependencyResolutionManagement {
-              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-              repositories {
-                  google()
-                  mavenCentral()
-              }
-          }
-          include ':app'
-          EOF
-
-          if [ ! -f "app/build.gradle" ]; then
-            mkdir -p app
-            cat << 'EOF' > app/build.gradle
-            plugins {
-                id 'com.android.application'
-            }
-            android {
-                namespace 'com.icegram.app'
-                compileSdk 34
-                defaultConfig {
-                    applicationId 'com.icegram.app'
-                    minSdk 24
-                    targetSdk 34
-                    versionCode 1
-                    versionName "1.0"
-                }
-            }
-            EOF
-          fi
+          echo "plugins { id 'com.android.application' version '8.2.0' apply false }" > build.gradle
+          echo -e "pluginManagement { repositories { google() mavenCentral() gradlePluginPortal() } }\ninclude ':app'" > settings.gradle
+          mkdir -p app
+          echo -e "plugins { id 'com.android.application' }\nandroid { namespace 'com.icegram.app' compileSdk 34\n defaultConfig { applicationId 'com.icegram.app' minSdk 24 targetSdk 34 versionCode 1 versionName '1.0' } }" > app/build.gradle
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3

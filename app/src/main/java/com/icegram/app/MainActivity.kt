@@ -1,11 +1,11 @@
 package com.icegram.app
 
-import android.app.Activity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Пустой экран без кастомных TextView и цветов, который точно не упадет
+        // Пустой AppCompat экран, который держит стандартную тему и не крашится
     }
 }
